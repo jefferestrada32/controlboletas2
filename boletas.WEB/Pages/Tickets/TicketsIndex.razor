@@ -16,12 +16,3 @@
 </div>
 
 
-@code {
-    public List<Ticket>? Tickets { get; set; }
-
-    protected async override Task OnInitializedAsync()
-    {
-        var responseHppt = await repository.Get<List<Ticket>>("/api/tickets");
-        Tickets = responseHppt.Response!;
-    }
-}

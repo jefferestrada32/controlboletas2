@@ -45,6 +45,8 @@ else
 
     private async Task Use()
     {
+
+
         ticket!.FueUsada = true;
         ticket!.FechaDeUso = DateTime.Now;
         var responseHTTP = await repository.Put("/api/tickets", ticket);
