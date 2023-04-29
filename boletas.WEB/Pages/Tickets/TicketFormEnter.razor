@@ -1,0 +1,35 @@
+﻿
+<EditForm Model="Ticket" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="mb-3">
+        <label>País:</label>
+        <div>
+            <InputText class="form-control" bind="@Ticket.Porteria" />
+            <ValidationMessage For="@(() => Ticket.Id)" />
+        </div>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Validar boleta</button>
+    <button class="btn btn-success" @onclick="ReturnAction">Regresar</button>
+</EditForm>
+
+@code {
+    [EditorRequired]
+    [Parameter]
+    public Ticket Ticket { get; set; } = null!;
+
+    [EditorRequired]
+    [Parameter]
+    public EventCallback OnValidSubmit { get; set; }
+
+    [EditorRequired]
+    [Parameter]
+    public EventCallback ReturnAction { get; set; }
+
+    public string MyProperty => getId().ToString();
+
+    public int getId()
+    {
+        return Ticket.Id;
+    }
+}

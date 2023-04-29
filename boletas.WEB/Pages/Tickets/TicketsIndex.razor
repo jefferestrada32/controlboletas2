@@ -1,0 +1,27 @@
+﻿@page "/tickets"
+
+
+
+@inject IRepository repository
+
+
+@inject NavigationManager navigationManager
+@inject SweetAlertService sweetAlertService
+
+
+<h3>Validar Boletas</h3>
+
+<div class="mb-3">
+    <a class="btn btn-primary" href="/tickets/enter">Nueva validacion</a>
+</div>
+
+
+@code {
+    public List<Ticket>? Tickets { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        var responseHppt = await repository.Get<List<Ticket>>("/api/tickets");
+        Tickets = responseHppt.Response!;
+    }
+}

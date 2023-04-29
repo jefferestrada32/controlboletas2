@@ -1,0 +1,52 @@
+﻿@page "/tickets/enter"
+@using System.Net;
+@inject NavigationManager navigationManager
+@inject IRepository repository
+@inject SweetAlertService sweetAlertService
+
+<h3>Validar TICKET</h3>
+
+<div class="form-group">
+    <label for="boleta">Número de Boleta:</label>
+    <input type="text" class="form-control" id="boleta" @bind-value="ticket.Id"  />
+</div>
+
+<button class="btn btn-primary" @onclick="Validate">Validar</button>
+
+
+@code {
+    private Ticket ticket = new();
+
+    private async Task Validate()
+    {
+        var responseHTTP = await repository.Get<Ticket>($"/api/tickets/{ticket.Id}");
+        ticket = responseHTTP.Response!;
+
+        if (responseHTTP.HttpResponseMessage.StatusCode == HttpStatusCode.NotFound){
+        
+            await sweetAlertService.FireAsync("Error", "La boleta no existe", SweetAlertIcon.Error);
+            navigationManager.NavigateTo("/tickets");
+           
+        }
+
+        if (ticket == null)
+        {
+            
+            Return();
+        }
+        else  if(ticket!.FueUsada == true)
+        {
+            await sweetAlertService.FireAsync("Error", $"La boleta {ticket.Id} ya fue usada en la porteria {ticket.Porteria} el dia {ticket.FechaDeUso} ", SweetAlertIcon.Error);
+            Return();
+        }
+        else
+        {
+            navigationManager.NavigateTo($"/tickets/use/{ticket.Id}");
+        }
+    }
+
+    private void Return()
+    {
+        navigationManager.NavigateTo("tickets");
+    }
+}

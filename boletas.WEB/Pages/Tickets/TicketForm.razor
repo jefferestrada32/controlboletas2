@@ -1,0 +1,34 @@
+﻿
+<EditForm Model="Ticket" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="mb-3">
+        <label>Portería:</label>
+        <div>
+            <InputSelect class="form-control" @bind-Value="@Ticket.Porteria">
+                <option value="">Seleccionar portería</option>
+                <option value="Norte">Norte</option>
+                <option value="Sur">Sur</option>
+                <option value="Oriental">Oriental</option>
+                <option value="Occidental">Occidental</option>
+            </InputSelect>
+            <ValidationMessage For="@(() => Ticket.Porteria)" />
+        </div>
+    </div>
+    <input type="hidden" name="FueUsada" value="1" />
+    <button class="btn btn-primary" type="submit">Guardar Cambios</button>
+    <button class="btn btn-success" @onclick="ReturnAction">Regresar</button>
+</EditForm>
+
+@code {
+    [EditorRequired]
+    [Parameter]
+    public Ticket Ticket { get; set; } = null!;
+
+    [EditorRequired]
+    [Parameter]
+    public EventCallback OnValidSubmit { get; set; }
+
+    [EditorRequired]
+    [Parameter]
+    public EventCallback ReturnAction { get; set; }
+}
