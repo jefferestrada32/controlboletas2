@@ -56,6 +56,7 @@ else
         }
         else
         {
+            await sweetAlertService.FireAsync("Mensaje:", $"La entrada {ticket.Id} ha sido aprobada ", SweetAlertIcon.Info);
             navigationManager.NavigateTo("tickets");
         }
     }

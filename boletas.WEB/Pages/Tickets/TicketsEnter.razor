@@ -24,7 +24,7 @@
 
         if (responseHTTP.HttpResponseMessage.StatusCode == HttpStatusCode.NotFound){
         
-            await sweetAlertService.FireAsync("Error", "La boleta no existe", SweetAlertIcon.Error);
+            await sweetAlertService.FireAsync("Error", "Boleta no valida", SweetAlertIcon.Error);
             navigationManager.NavigateTo("/tickets");
            
         }
